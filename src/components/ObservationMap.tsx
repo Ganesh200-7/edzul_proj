@@ -9,10 +9,8 @@ import {
   Minimize2,
   Crosshair,
   Compass,
-  Globe2,
   Satellite,
   Mountain,
-  Moon,
   type LucideIcon,
 } from 'lucide-react';
 import type { FeatureGroup, Map as LeafletMap, TileLayer } from 'leaflet';
@@ -24,7 +22,7 @@ interface ObservationMapProps {
   isDarkMode?: boolean;
 }
 
-type MapLayerType = 'satellite' | 'terrain' | 'dark' | 'voyager';
+type MapLayerType = 'satellite' | 'terrain';
 
 const MAP_LAYERS: {
   id: MapLayerType;
@@ -50,22 +48,6 @@ const MAP_LAYERS: {
     maxZoom: 18,
     icon: Mountain,
   },
-  {
-    id: 'dark',
-    label: 'Night Glow',
-    url: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-    attribution: '&copy; OpenStreetMap contributors &copy; CARTO | GBIF',
-    maxZoom: 19,
-    icon: Moon,
-  },
-  {
-    id: 'voyager',
-    label: 'Discovery',
-    url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
-    attribution: '&copy; OpenStreetMap contributors &copy; CARTO | GBIF',
-    maxZoom: 19,
-    icon: Globe2,
-  },
 ];
 
 export const ObservationMap: React.FC<ObservationMapProps> = ({
@@ -79,6 +61,8 @@ export const ObservationMap: React.FC<ObservationMapProps> = ({
   const activeTileLayerRef = useRef<TileLayer | null>(null);
   const markersLayerRef = useRef<FeatureGroup | null>(null);
   const hasMountedRef = useRef(false);
+  const activeLayerRef = useRef<MapLayerType>('satellite');
+  const layerSwitchSequenceRef = useRef(0);
 
   const [activeLayer, setActiveLayer] = useState<MapLayerType>('satellite');
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -116,12 +100,22 @@ export const ObservationMap: React.FC<ObservationMapProps> = ({
   // Switch tile layer seamlessly
   const switchLayer = useCallback(
     (layerId: MapLayerType) => {
+      const switchSequence = ++layerSwitchSequenceRef.current;
+      activeLayerRef.current = layerId;
       setActiveLayer(layerId);
       const currentMap = mapInstanceRef.current;
       if (!currentMap) return;
 
       import('leaflet').then((L) => {
-        if (activeTileLayerRef.current && currentMap) {
+        if (
+          switchSequence !== layerSwitchSequenceRef.current ||
+          mapInstanceRef.current !== currentMap ||
+          !currentMap.getPane('tilePane')
+        ) {
+          return;
+        }
+
+        if (activeTileLayerRef.current) {
           currentMap.removeLayer(activeTileLayerRef.current);
         }
 
@@ -151,6 +145,8 @@ export const ObservationMap: React.FC<ObservationMapProps> = ({
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
+        activeTileLayerRef.current = null;
+        markersLayerRef.current = null;
       }
 
       const defaultCenter: [number, number] =
@@ -168,7 +164,7 @@ export const ObservationMap: React.FC<ObservationMapProps> = ({
       mapInstanceRef.current = map;
 
       // Add default tile layer
-      const config = MAP_LAYERS.find((l) => l.id === activeLayer) || MAP_LAYERS[0];
+      const config = MAP_LAYERS.find((l) => l.id === activeLayerRef.current) || MAP_LAYERS[0];
       const tile = L.tileLayer(config.url, {
         attribution: config.attribution,
         maxZoom: config.maxZoom,
@@ -285,9 +281,11 @@ export const ObservationMap: React.FC<ObservationMapProps> = ({
       if (mapInstanceRef.current) {
         mapInstanceRef.current.remove();
         mapInstanceRef.current = null;
+        activeTileLayerRef.current = null;
+        markersLayerRef.current = null;
       }
     };
-  }, [activeLayer, geoObservations, speciesName]);
+  }, [geoObservations, speciesName]);
 
   const toggleFullscreen = () => {
     setIsFullscreen((prev) => !prev);

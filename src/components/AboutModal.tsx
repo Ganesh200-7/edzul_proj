@@ -106,7 +106,7 @@ export const AboutModal: React.FC<AboutModalProps> = ({ isOpen, onClose, isDarkM
                 DeepSeek-V4.1-Flash LLM
               </span>
               <span className="px-3 py-1 rounded-xl bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 font-semibold">
-                Leaflet GIS (Satellite, Topo, Dark, Voyager)
+                Leaflet GIS (Satellite, Topographic)
               </span>
               <span className="px-3 py-1 rounded-xl bg-stone-100 dark:bg-stone-900 border border-stone-200 dark:border-stone-800 font-semibold">
                 GBIF &amp; iNaturalist Open APIs

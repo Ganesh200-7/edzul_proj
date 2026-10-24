@@ -89,7 +89,7 @@ Understanding Earth's living organisms requires connecting scientific taxonomy w
 | **Styling** | **Tailwind CSS v4** | Forest-themed responsive styling, custom CSS tokens & 3D animations |
 | **Typography** | **Outfit & Plus Jakarta Sans** | Modern geometric display headings & ergonomic data readability |
 | **Icons** | **Lucide React** | Clean, accessible iconography |
-| **GIS Mapping** | **Leaflet & Multi-Source Tiles** | Interactive observation mapping with Esri Satellite, Topo & CartoDB tiles |
+| **GIS Mapping** | **Leaflet & Esri Tiles** | Interactive observation mapping with satellite imagery and topographic layers |
 | **AI LLM Engine** | **DeepSeek-V4.1-Flash** | Zoological taxonomy disambiguation, regional animal parsing & ecological traits |
 | **Biodiversity Data** | **GBIF & iNaturalist Public APIs**| Live species taxonomy, vernacular names, and occurrence data |
 | **Deployment** | **Vercel** | Edge-ready serverless deployment |
