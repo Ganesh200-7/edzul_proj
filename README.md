@@ -4,6 +4,8 @@
 
 **WildLife Explorer** is a modern, responsive web application designed for exploring wildlife species, authentic biodiversity occurrence records, high-resolution photographs, scientific taxonomy, common names, dates, and geographic locations. The application queries live data from the **Global Biodiversity Information Facility (GBIF) Public API** and provides an offline fallback mode for resilient presentations.
 
+**Live deployment:** [WildLife Explorer on Vercel](https://edzul-proj-ohnqplitg-gani16.vercel.app)
+
 ---
 
 ## 🌿 Project Overview
