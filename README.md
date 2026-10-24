@@ -147,7 +147,6 @@ wildlife/
 │       └── wildlife.ts               # TypeScript interfaces for GBIF species, records & photos
 ├── public/                           # Static assets (audited & cleaned of unused starter icons)
 ├── README.md                         # Project documentation
-├── DEMO_SCRIPT.md                    # 3–5 minute presentation demonstration flow
 ├── package.json                      # Project dependencies & scripts
 └── tsconfig.json                     # TypeScript configuration
 ```
@@ -200,4 +199,3 @@ GBIF aggregates hundreds of millions of scientific records from museums, univers
 - **Network Rate Limits & Downtime**: If the public GBIF API experiences network latency or rate-limiting, the application triggers an AbortController timeout (10s) and offers an instant transition to the verified offline sample dataset.
 
 ---
-
