@@ -37,7 +37,7 @@ const MAP_LAYERS: {
     label: 'Satellite',
     url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     attribution: '&copy; Esri, Maxar, Earthstar Geographics | GBIF',
-    maxZoom: 18,
+    maxZoom: 17,
     icon: Satellite,
   },
   {
@@ -45,7 +45,7 @@ const MAP_LAYERS: {
     label: 'Terrain',
     url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',
     attribution: '&copy; Esri, HERE, Garmin, Intermap | GBIF',
-    maxZoom: 18,
+    maxZoom: 17,
     icon: Mountain,
   },
 ];
