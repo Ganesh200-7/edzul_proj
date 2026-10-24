@@ -1,93 +1,119 @@
 # WildLife Explorer – 3 to 5 Minute Live Demonstration Script
 
-This demonstration script is prepared for the **Edzul Project Assignment** presentation. It provides a structured, timed walkthrough suitable for a live demonstration or recorded video pitch.
+> **Project Slogan:** *“Exploring today. Conserving tomorrow.”*
+
+This presentation script provides a structured, timed walkthrough of **WildLife Explorer – Global Species Discovery** for the college team project demonstration.
 
 ---
 
 ## ⏱️ Presentation Outline & Timing (Total: 4 Minutes)
 
-- **0:00 – 0:45**: Project Introduction, Mission & Architecture Overview (Presenter 1)
-- **0:45 – 1:45**: Live Species Search & Scientific Taxonomy Demonstration (Presenter 2)
-- **1:45 – 2:45**: Wildlife Imagery, Licensing & Geolocation Map (Presenter 3)
-- **2:45 – 3:30**: Error Handling, Validation & Offline Fallback Mode (Presenter 4)
-- **3:30 – 4:00**: Summary, Q&A & Code Quality Wrap-up (All Presenters)
+| Time | Segment | Focus Area | Presenter |
+|---|---|---|---|
+| **0:00 – 0:45** | **Part 1**: Introduction & Design System | Mission, forest theme, Outfit typography & 3D cards | Presenter 1 (Team Lead) |
+| **0:45 – 1:45** | **Part 2**: Multi-Source Wildlife Discovery | Intelligent ranking (Deer, Peacock), candidate taxa tabs | Presenter 2 (API Lead) |
+| **1:45 – 2:30** | **Part 3**: Enterprise GIS Map Suite | 4 tile layers (Satellite, Topo, Dark), Fullscreen & Radar Pins | Presenter 3 (GIS / Map Lead) |
+| **2:30 – 3:15** | **Part 4**: Occurrence Drawer, Filters & Resilience | Occurrence filters, Country filter, validation & offline fallback | Presenter 4 (QA / Systems Lead) |
+| **3:15 – 3:45** | **Part 5**: Architecture, Audit & Wrap-Up | Code cleanup, zero lint build, Vercel readiness, Q&A | All Presenters |
 
 ---
 
 ## 🎬 Step-by-Step Script
 
-### Part 1: Introduction & Technology Stack (0:00 – 0:45)
-**Speaker**: *Presenter 1 (UI & Architecture Lead)*
-- **Action**: Open [http://localhost:3000](http://localhost:3000) on a clean browser screen.
+### Part 1: Introduction & Design System (0:00 – 0:45)
+**Speaker**: *Presenter 1 (Team Lead)*
+- **Action**: Open [http://localhost:3000](http://localhost:3000) on a clean browser screen. Hover cursor over the hero feature cards to demonstrate the subtle 3D tilt.
 - **Dialogue**:
-  > *"Hello everyone! Welcome to our presentation of **WildLife Explorer – Global Species Discovery**, our project submission for the Edzul assignment.*
+  > *"Good morning, professors and classmates! Welcome to our demonstration of **WildLife Explorer – Global Species Discovery**.*
   >
-  > *Our objective was to build a clean, modern, and resilient web application that connects users with verified scientific biodiversity data and real-world field observations.*
+  > *Our project objective was to build a production-grade biodiversity intelligence web platform that connects modern web design with authentic scientific data from the **GBIF Backbone Taxonomy** and **iNaturalist**.*
   >
-  > *We built this using **Next.js 16 with the App Router**, **TypeScript**, and **Tailwind CSS**. Rather than using static mockups, we integrated the live **iNaturalist API** to fetch real species taxonomy, high-resolution photography, and citizen-science sightings from across the world."*
+  > *We built the application with **Next.js 16 (App Router)**, **TypeScript**, and **Tailwind CSS v4**. Notice our brand-new forest-green design system: ambient canopy mesh gradients, modern typography using **Outfit** for headings and **Plus Jakarta Sans** for crisp data tables, glassmorphic HUD panels, and subtle **3D card hover physics**.*
+  >
+  > *Our header features clean navigation, a live API status indicator, dark/light mode toggle, and our core project slogan: **'Exploring today. Conserving tomorrow.'**"*
 
 ---
 
-### Part 2: Live Search & Taxonomy Exploration (0:45 – 1:45)
-**Speaker**: *Presenter 2 (API & Service Integration Lead)*
-- **Action**: Type `"Red Panda"` into the search bar, click **Search**.
+### Part 2: Multi-Source AI Wildlife Discovery (0:45 – 1:45)
+**Speaker**: *Presenter 2 (API Lead)*
+- **Action**: 
+  1. In the search bar, type `rat` and press Enter. Point out that the system correctly identifies true rats (*Rattus* genus, family *Muridae*), completely rejecting false matches like dolphinfish or maggot flies.
+  2. Next, type `peacock` and press Enter to show the Indian Peafowl (*Pavo cristatus*, *Phasianidae*), rejecting butterfly homonyms.
+  3. Next, demonstrate an obscure animal query: type `aye aye` or `pink fairy armadillo`. Show how the team's **DeepSeek AI LLM** disambiguates the obscure creature to its scientific taxon (*Daubentonia madagascariensis*), fetches genuine observation records, and renders the **Ecological Profile** (Native Habitat, Primary Diet, Geographic Range, and IUCN Conservation Status).
 - **Dialogue**:
-  > *"Let's demonstrate a live search. I'll search for the **Red Panda**.*
+  > *"Let's explore our multi-source AI search architecture. A classic pitfall in biodiversity searching is query ambiguity: searching for 'rat' often accidentally returns dolphinfish or maggots, 'peacock' returns butterflies, and 'deer' returns plants.*
   >
-  > *Behind the scenes, our `wildlifeService.ts` queries the iNaturalist taxa endpoint with an AbortController timeout guard. As you can see, the application instantly updates:*
-  > 1. *It presents the verified common name and the italicized scientific name, **Ailurus fulgens**.*
-  > 2. *It badges the taxonomic rank — **Species** — and its iconic class, **Mammalia**.*
-  > 3. *It pulls the **IUCN Red List status** — here classified as **Endangered** — with color-coded alerts.*
-  > 4. *It provides an encyclopedia summary and total recorded sighting statistics from field researchers.*
+  > *We engineered a 3-tier intelligence pipeline combining the **GBIF Backbone Taxonomy**, **iNaturalist Taxa API**, and our team's **DeepSeek-V4.1-Flash LLM** backend.*
   >
-  > *Notice that our search form also provides taxonomic filters — allowing users to filter by Mammals, Birds, Insects, Reptiles, and Plants with a single click."*
+  > *When I search for **'rat'**, our system guarantees only true rodents (*Rattus* genus, family *Muridae*) are returned.*
+  >
+  > *When I search for **'peacock'**, it locks onto the Indian Peafowl (*Pavo cristatus*).*
+  >
+  > *And when users search for obscure or unfamiliar animals worldwide — like **'aye aye'** or **'pink fairy armadillo'** — our AI disambiguation layer instantly resolves the creature's scientific identity (*Daubentonia madagascariensis*), queries GBIF for 340+ verified field sightings, and populates the **Ecological Profile & Conservation Status** with native habitat, diet, and IUCN status."*
 
 ---
 
-### Part 3: Field Imagery, Attributions & Geolocation Mapping (1:45 – 2:45)
-**Speaker**: *Presenter 3 (Media, Attribution & Geolocation Lead)*
-- **Action**: Scroll down to the **Wildlife Photography & Field Imagery** gallery. Click on the first image to open the lightbox modal. Then close it and view the **Geographic Observation Map**.
+### Part 3: Enterprise GIS Biodiversity Map Suite (1:45 – 2:30)
+**Speaker**: *Presenter 3 (GIS / Map Lead)*
+- **Action**: 
+  1. Scroll down to the **Geographic Observation Map**.
+  2. Click the layer buttons: toggle from **Discovery** to **Satellite (Esri)**, then **Topographic**, then **Dark Night**.
+  3. Click the **Fullscreen** button to expand the map across the entire monitor, then exit fullscreen.
+  4. Click on an animated **Radar Beacon pin** to display the specimen popup card showing photo, date, observer, and GPS coordinates.
 - **Dialogue**:
-  > *"Next, let's explore the photography section. Our application honors Creative Commons licensing rules by displaying the photographer's attribution and specific CC license code on every card.*
+  > *"Now, let's present our most significant technical upgrade: our **Enterprise GIS Biodiversity Map Suite**, powered by **Leaflet** with zero external API key dependencies.*
   >
-  > *Clicking any photograph opens an interactive high-resolution lightbox modal, allowing users to inspect the wildlife photography in detail.*
+  > *Rather than a basic street map, users have access to a floating GIS HUD with 4 professional tile layers:*
+  > - *🛰️ **Satellite Imagery** from Esri World Imagery to view real-world biomes and forest cover.*
+  > - *⛰️ **Topographic Terrain** showing contour lines and elevation.*
+  > - *🌙 **Night Glow** for modern dark-room presentations.*
+  > - *🗺️ **Discovery Voyager** for clean cartographic exploration.*
   >
-  > *As we scroll down, we reach our optional enhancement: the **Geographic Observation Map**, built with **Leaflet**. Each green pin represents an authenticated sighting in the wild.*
+  > *Notice the markers: they are custom **pulsing radar beacons** color-coded by basis of record — emerald for live human sightings and cyan for preserved natural history specimens.*
   >
-  > *Clicking on any pin opens a popup showing the observer's handle, observation date, and precise coordinates — for example, in the Himalayas or national reserves. Below the map, each observation card displays its quality grade, such as **Research Grade**, and provides a direct link to the record on iNaturalist."*
+  > *Clicking on any beacon opens a rich popup card featuring the specimen photograph, observer handle, collection date, copyable GPS coordinates, and a direct link to the official GBIF record.*
+  >
+  > *Users can also click the **Fullscreen** button to expand the map for full-room auditorium viewing or use the **Recenter** button to instantly snap back to the species' geographic bounding box."*
 
 ---
 
-### Part 4: Validation, Error Handling & Offline Fallback (2:45 – 3:30)
-**Speaker**: *Presenter 4 (Resilience & Fallback Architecture Lead)*
+### Part 4: Occurrence Drawer, Filters & Resilience (2:30 – 3:15)
+**Speaker**: *Presenter 4 (QA / Systems Lead)*
 - **Action**:
-  1. Clear the search input and click **Search** to demonstrate validation.
-  2. In the top navigation header, click the **"Live API (iNaturalist)"** badge to toggle into **Sample Data Mode**.
-  3. Search for a non-existent word like `"xyzfake123"` to show the empty-results screen.
+  1. In the **Observation Records** section, click the filter pills: **With Photos**, **GPS Located**, and **Human Observations**.
+  2. Click an observation card to open the slide-out **Observation Detail Drawer**.
+  3. Demonstrate the **Country Filter** dropdown (e.g. filter by South Africa or India).
+  4. Search for `xyzfake123` to show the friendly empty state with suggestion pills.
+  5. Toggle the header badge to **Sample Data Mode** to display the offline fallback banner.
 - **Dialogue**:
-  > *"A critical requirement of our assignment was resilience and error handling. Let's demonstrate three scenarios:*
+  > *"Next, let's look at our observation data controls and system resilience:*
   >
-  > *First, **Input Validation**: If a user accidentally submits an empty query, the application catches it client-side without sending unnecessary network requests.*
+  > *In the **Observation Records** section, users can toggle quick filter pills to instantly isolate records that have photographs, GPS coordinates, or are verified human observations. Clicking any record slides open an **Observation Detail Drawer** with full metadata, catalog numbers, and licensing.*
   >
-  > *Second, **Offline Fallback**: If the public API encounters network downtime or rate limiting, our system provides a seamless fallback to a curated offline dataset. I can trigger this anytime using the toggle in the header. Notice the distinct amber banner that clearly notifies the user they are viewing verified sample data.*
+  > *Our **Country Filter** allows naturalists to filter occurrences by nation, querying GBIF with country codes in real time.*
   >
-  > *Third, **Zero Results**: If a user searches for an organism that doesn't exist — such as 'xyzfake123' — the application correctly displays a friendly empty-state card with one-click suggestions, rather than showing unrelated fallback data."*
+  > *For error handling and resilience:*
+  > - *Empty or invalid inputs are caught instantly with friendly inline feedback.*
+  > - *Searching for non-existent terms like **'xyzfake123'** displays an elegant empty-state card with one-click suggestion pills.*
+  > - *If external APIs experience rate-limits or downtime, our **Curated Offline Fallback Mode** can be toggled with one click from the header, ensuring uninterrupted presentation delivery."*
 
 ---
 
-### Part 5: Code Quality & Conclusion (3:30 – 4:00)
-**Speaker**: *Presenter 1 (Wrap-up)*
-- **Action**: Click the **"Monarch Butterfly"** suggestion pill to demonstrate instant recovery, then conclude.
+### Part 5: Architecture, Audit & Wrap-Up (3:15 – 3:45)
+**Speaker**: *Presenter 1 (Wrap-Up)*
+- **Action**: Click the **About Project** link in the navigation header or footer to show the About modal, scroll through the tech stack and GBIF/iNaturalist endpoints, and conclude.
 - **Dialogue**:
-  > *"Clicking 'Monarch Butterfly' immediately recovers and pulls live data for **Danaus plexippus**.*
+  > *"Opening our **About Project** modal, you can see our complete architectural breakdown.*
   >
-  > *Our codebase is organized into modular components with strict separation between UI and API services. The application builds cleanly with zero TypeScript errors and passes all production checks.*
+  > *During our recent code audit, we cleaned out all boilerplate starter assets, eliminated dead code, and organized the codebase into modular, strictly typed components.*
   >
-  > *Thank you for your time, and we would be delighted to answer any questions!"*
+  > *The project builds cleanly with **zero TypeScript errors and zero warnings**, optimized for instant Vercel deployment.*
+  >
+  > *Thank you for your time, and we welcome any questions!"*
 
 ---
 
-## 💡 Quick Tips for the Live Demo
-1. Ensure your local server is running (`npm run start` or `npm run dev` at `http://localhost:3000`).
-2. Test both light and dark display modes; the default nature-inspired dark theme provides high contrast for projection screens.
-3. Keep the browser zoomed at 100% or 110% for crisp typography during screen sharing.
+## 💡 Demonstration Checklist Before Presenting
+1. Ensure the dev server is active: `npm run dev` at [http://localhost:3000](http://localhost:3000).
+2. Test both Light and Dark themes to ensure optimal projection screen readability.
+3. Have quick search queries ready: `Elephant`, `Tiger`, `Monarch Butterfly`, and `xyzfake123`.

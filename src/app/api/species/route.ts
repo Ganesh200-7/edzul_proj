@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { searchWildlife, getSampleWildlife } from '@/services/wildlifeService';
+import { searchWildlife } from '@/services/wildlifeService';
+
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get('q') || '';
-  const iconicTaxon = searchParams.get('iconicTaxon') || 'All';
+  const country = searchParams.get('country') || undefined;
   const forceFallback = searchParams.get('fallback') === '1' || searchParams.get('fallback') === 'true';
 
   if (!q.trim()) {
@@ -17,13 +18,14 @@ export async function GET(request: NextRequest) {
   try {
     const data = await searchWildlife(q, {
       forceFallback,
-      iconicTaxon,
+      country,
     });
     return NextResponse.json(data);
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : 'An unexpected error occurred while querying GBIF biodiversity data.';
     return NextResponse.json(
       {
-        error: error.message || 'An unexpected error occurred while fetching wildlife data.',
+        error: message,
         query: q,
         canFallback: true,
       },

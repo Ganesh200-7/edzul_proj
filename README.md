@@ -1,203 +1,237 @@
 # WildLife Explorer – Global Species Discovery
 
-An interactive, responsive biodiversity web application built for the **Edzul Project Assignment**. WildLife Explorer enables users to discover species across the globe, view validated scientific taxonomy, explore high-resolution wildlife photography with Creative Commons attribution, inspect citizen-science observation records, and visualize sightings on an interactive geographic map.
+> **Project Slogan:** *“Exploring today. Conserving tomorrow.”*
+
+**WildLife Explorer** is a modern, responsive web application designed for exploring wildlife species, authentic biodiversity occurrence records, high-resolution photographs, scientific taxonomy, common names, dates, and geographic locations. The application queries live data from the **Global Biodiversity Information Facility (GBIF) Public API** and provides an offline fallback mode for resilient presentations.
 
 ---
 
 ## 🌿 Project Overview
 
-- **Application Title**: WildLife Explorer
-- **Core Purpose**: Connect students, naturalists, and researchers with real-world global biodiversity data.
-- **Primary Integration**: **iNaturalist Open API** (`/v1/taxa` and `/v1/observations`)
-- **Fallback Architecture**: Curated offline sample dataset providing full functionality when public APIs are unreachable or offline.
+Understanding Earth's living organisms requires connecting scientific taxonomy with real-world field observations. **WildLife Explorer** allows students, naturalists, and researchers to:
+- Search for wildlife species across all animal kingdoms by common name (e.g., *Deer*, *Peacock*, *Tiger*, *Elephant*, *Axolotl*) or scientific name (e.g., *Cervidae*, *Pavo cristatus*, *Panthera tigris*).
+- Inspect full taxonomic classifications from Kingdom to Species with verified rank badges.
+- Explore verified observation records, including dates, locations, coordinates, observer attributions, and specimen photos.
+- Browse authentic wildlife photographs with explicit Creative Commons licensing and fullscreen lightbox zoom.
+- Analyze species occurrences using an enterprise-grade **Interactive Biodiversity GIS Map Suite** featuring 4 tile layers (Satellite, Topographic, Dark Night, and Discovery), fullscreen viewing, bounds fitting, and pulsing radar beacon pins.
+- Filter observation records by country (e.g., South Africa, India, Thailand, United States, Kenya, Brazil).
+- Seamlessly transition between **Live GBIF API** mode and a curated **Offline Sample Dataset** for reliable demonstrations.
 
 ---
 
-## 🛠️ Technology Stack
+## ✨ Key Features & Enhancements
 
-| Layer | Technology | Details |
-| :--- | :--- | :--- |
-| **Framework** | [Next.js 16 (App Router)](https://nextjs.org/) | Modern server-rendered and client components with Turbopack |
-| **Language** | [TypeScript 5](https://www.typescriptlang.org/) | Strict type safety for data models, API payloads, and components |
-| **Styling** | [Tailwind CSS v4](https://tailwindcss.com/) | Nature-inspired color scheme (emerald, teal, stone, amber) |
-| **Mapping** | [Leaflet](https://leafletjs.com/) | Interactive OpenStreetMap geovisualization of observation coordinates |
-| **Icons** | [Lucide React](https://lucide.dev/) | Clean, accessible wildlife and interface icons |
-| **Data API** | [iNaturalist REST API](https://api.inaturalist.org/v1/) | Live taxonomy, observation coordinates, and CC-licensed imagery |
+1. **Forest-Inspired Premium Design System**:
+   - Modern typography powered by **Outfit** (headings) and **Plus Jakarta Sans** (clean data hierarchy).
+   - Tailored forest-green palette (`#061a12` deep canopy to `#10b981` vibrant emerald).
+   - Glassmorphism panels (`.glass-panel-dark`, `.glass-panel-light`) with ambient forest mesh gradients.
+   - Subtle **3D card hover effects** (`.card-3d`) that dynamically tilt and elevate on user interaction.
+   - Polished buttons with shimmering hover effects (`.btn-premium`) and custom dark/light mode toggle.
+
+2. **Enterprise GIS Biodiversity Map Suite**:
+   - **4 Selectable Tile Layers**:
+     - 🛰️ **Satellite Imagery**: High-resolution true-color satellite views via Esri World Imagery.
+     - ⛰️ **Topographic Terrain**: Contour lines, elevation shading, and trails via Esri World Topo.
+     - 🌙 **Night Glow**: Sleek low-light minimalist cartography via CartoDB Dark Matter.
+     - 🗺️ **Discovery Voyager**: Clean, high-contrast exploratory mapping via CartoDB Voyager.
+   - **Floating GIS HUD Controls**: Layer switcher pills, one-click recenter/fit-to-bounds (`Crosshair`), fullscreen expand/minimize (`Maximize2`/`Minimize2`), and smooth zoom controls.
+   - **Animated Radar Beacon Pins**: Custom pulsating beacon rings with basis-of-record color-coding (emerald for live human observations, cyan for preserved museum specimens).
+   - **Rich Interactive Popups**: Display specimen thumbnails, observer handles, verified status badges, copyable GPS coordinates, and direct links to official GBIF occurrence records.
+   - **Conservation Awareness**: Graceful empty-state explanation when species coordinates are intentionally obscured by conservationists to protect endangered wildlife from poaching.
+
+3. **Intelligent Multi-Source Search & Ranking**:
+   - Resolves queries against the **GBIF Backbone Taxonomy** with **iNaturalist Taxa API** fallback.
+   - Advanced relevance ranking prioritizes true animal species over botanical names:
+     - Searching `"deer"` correctly returns the Cervidae family and true deer species (e.g. *Odocoileus virginianus*) rather than unrelated plants like *Deeringothamnus* (false pawpaw).
+     - Searching `"peacock"` returns *Pavo cristatus* rather than the peacock butterfly or plants.
+     - Searching `"dolphin"` returns true cetaceans (*Delphinus delphis*, *Tursiops*) rather than moths.
+   - Multiple matching taxa selector allows switching between related species, genera, and families with clear rank tags (`[SPECIES]`, `[GENUS]`, `[FAMILY]`).
+
+4. **Dedicated Species Profile**:
+   - 6-level taxonomic classification grid (Kingdom, Phylum, Class, Order, Family, Genus).
+   - Verified encyclopedia natural history descriptions from GBIF checklist datasets.
+   - Total recorded occurrences count badge and direct link to official GBIF taxon profiles.
+
+5. **Wildlife Photography Gallery**:
+   - Featured high-resolution specimen photograph with interactive thumbnail carousel.
+   - Fullscreen lightbox modal with keyboard dismissal (`Escape`).
+   - Strict open-science attribution overlay detailing photographer name, date, and Creative Commons license.
+
+6. **Observation & Occurrence Records Suite**:
+   - Retrieved dynamically from the GBIF Occurrence API.
+   - Interactive category filter pills: *All Records*, *With Photos*, *GPS Located*, and *Human Observations*.
+   - Client-side pagination (*“Load More”*) and quick locality search.
+   - Observation detail drawer for deep inspection of individual specimen collection events.
+
+7. **Country Filter (Bonus Feature)**:
+   - Filter dropdown supporting major biodiversity countries (e.g., South Africa, India, Thailand, Kenya, Zimbabwe, Botswana, United States, Brazil) as well as *All Countries*.
+   - Injects the `country={code}` parameter directly into GBIF Occurrence API queries.
+
+8. **Resilience & Polished UI States**:
+   - **Loading State**: Animated skeleton cards with specific progress messaging (*“Searching species & loading observation records from GBIF...”*).
+   - **Error State**: Friendly error prompt with a *Retry* button and a one-click option to switch to the curated sample dataset.
+   - **Empty State**: Friendly card when no species match, with quick search suggestion pills.
+   - **Offline Sample Mode**: Prominent amber banner indicating that verified sample data is active, with a one-click button to resume live API queries.
+
+9. **About Project Modal**:
+   - Accessible via the **About Project** navigation link in the header and footer, highlighting the project mission, GBIF and iNaturalist API endpoints, tech stack, and conservation slogan.
 
 ---
 
-## ✨ Key Features
+## 🛠️ Technologies Used
 
-1. **Species Search & Validation**
-   - Search by common name (e.g., *Bengal Tiger*, *Monarch Butterfly*) or scientific name (*Panthera tigris*, *Danaus plexippus*).
-   - Instant client-side validation prevents empty searches.
-   - Quick-search suggestion pills for famous wildlife species.
-
-2. **Taxonomy & Species Profile**
-   - Displays scientific name in italic serif typography and verified common names.
-   - Badges for **Taxonomic Rank** (Species, Subspecies, Genus, Family), **Iconic Class** (Mammalia, Aves, Insecta, etc.), and **IUCN Red List Conservation Status** (Critically Endangered, Endangered, Vulnerable, Least Concern).
-   - Encyclopedia overview and recorded observation count.
-   - Multi-taxa selector tabs when queries return multiple matching organisms.
-
-3. **Field Imagery & Lightbox Gallery**
-   - High-resolution photographs from field sightings.
-   - Automatic graceful fallback placeholder if an external image fails to load.
-   - Full photo attribution and Creative Commons license badge (e.g., `CC-BY-NC`, `CC-BY-SA`).
-   - Clickable lightbox modal for inspecting high-res photography.
-
-4. **Community Observation Records**
-   - Detailed sightings records with observation date, observer username (`@handle`), location/place name, and quality status (*Research Grade*, *Needs ID*, *Casual*).
-   - Geographic coordinates badge with latitude and longitude.
-   - Direct link to view the observation on the iNaturalist platform.
-   - In-page observation search filter (by country, location name, or observer).
-
-5. **Geographic Observation Map (Enhancement)**
-   - Interactive Leaflet map plotting sightings with valid latitude and longitude.
-   - Custom emerald pins with interactive popups displaying species thumbnail, date, location, and observer info.
-   - Graceful notification when sightings have obscured coordinates for endangered species protection.
-
-6. **Taxonomic Category Filter (Enhancement)**
-   - One-click filters for **Mammals**, **Birds**, **Insects**, **Reptiles**, **Amphibians**, **Fishes**, and **Plants**.
-
-7. **Resilient Loading, Error & Fallback System**
-   - Animated shimmer loading skeletons during network requests.
-   - Informative error alerts with a **Retry** button if the network is disconnected.
-   - **Sample Data Fallback**: When the public API is unavailable, the application can automatically fall back to or manually toggle into a curated offline dataset without crashing.
-   - **Clear Sample Data Distinction**: Prominent amber badge and notification banner clearly distinguishing sample records from live API results.
-   - **True Empty-Results State**: When an API search genuinely returns zero results, the app displays a helpful empty state with suggestions rather than substituting unrelated sample data.
+| Layer | Technology | Purpose |
+|---|---|---|
+| **Frontend Framework** | **Next.js 16 (App Router)** | Server and client component architecture, dynamic routing |
+| **Language** | **TypeScript 5** | Strict type safety for GBIF data models and components |
+| **Styling** | **Tailwind CSS v4** | Forest-themed responsive styling, custom CSS tokens & 3D animations |
+| **Typography** | **Outfit & Plus Jakarta Sans** | Modern geometric display headings & ergonomic data readability |
+| **Icons** | **Lucide React** | Clean, accessible iconography |
+| **GIS Mapping** | **Leaflet & Multi-Source Tiles** | Interactive observation mapping with Esri Satellite, Topo & CartoDB tiles |
+| **AI LLM Engine** | **DeepSeek-V4.1-Flash** | Zoological taxonomy disambiguation, regional animal parsing & ecological traits |
+| **Biodiversity Data** | **GBIF & iNaturalist Public APIs**| Live species taxonomy, vernacular names, and occurrence data |
+| **Deployment** | **Vercel** | Edge-ready serverless deployment |
 
 ---
 
-## 📂 Project Architecture
+## 🌐 API Endpoints Used
 
-```
+The application communicates with public endpoints provided by the **Global Biodiversity Information Facility (GBIF)**, **iNaturalist**, and the team's **DeepSeek LLM**:
+
+1. **GBIF Species Match**: `GET https://api.gbif.org/v1/species/match?name={query}&strict=false&verbose=true`
+2. **GBIF Species Suggest**: `GET https://api.gbif.org/v1/species/suggest?q={query}&limit=10`
+3. **GBIF Species Search**: `GET https://api.gbif.org/v1/species/search?q={query}&limit=10`
+4. **GBIF Species Detail**: `GET https://api.gbif.org/v1/species/{key}`
+5. **GBIF Vernacular Names**: `GET https://api.gbif.org/v1/species/{key}/vernacularNames?limit=25`
+6. **GBIF Descriptions**: `GET https://api.gbif.org/v1/species/{key}/descriptions?limit=5`
+7. **GBIF Occurrence Search**: `GET https://api.gbif.org/v1/occurrence/search?taxonKey={key}&limit=24&country={code}`
+8. **GBIF Occurrence Media**: `GET https://api.gbif.org/v1/occurrence/search?taxonKey={key}&mediaType=StillImage&limit=12`
+9. **iNaturalist Taxa Fallback**: `GET https://api.inaturalist.org/v1/taxa?q={query}&is_active=true`
+10. **Team DeepSeek LLM**: `POST https://api.deepseek.com/chat/completions` (model: `deepseek-flash`)
+11. **Wikimedia Commons**: `GET https://en.wikipedia.org/api/rest_v1/page/summary/{title}` (Creative Commons verified imagery)
+
+---
+
+## 📁 Cleaned & Audited Project Structure
+
+```text
 wildlife/
 ├── src/
 │   ├── app/
 │   │   ├── api/
+│   │   │   ├── occurrences/
+│   │   │   │   └── route.ts          # Server API proxy for paginated GBIF occurrences
 │   │   │   └── species/
-│   │   │       └── route.ts         # Server-side API proxy for iNaturalist queries
-│   │   ├── globals.css              # Tailwind CSS styling and theme tokens
-│   │   ├── layout.tsx               # Root layout, fonts, and metadata
-│   │   └── page.tsx                 # Main application view & state orchestrator
+│   │   │       └── route.ts          # Server API proxy for GBIF & iNaturalist multi-source search
+│   │   ├── globals.css               # Design tokens, Google fonts, glassmorphism & 3D animations
+│   │   ├── layout.tsx                # Root layout with metadata and fonts
+│   │   └── page.tsx                  # Main interactive application page
 │   ├── components/
-│   │   ├── Header.tsx               # App branding & Live/Sample mode toggle
-│   │   ├── HeroSection.tsx          # Project intro, search form, validation & filters
-│   │   ├── SpeciesCard.tsx          # Taxonomy, scientific name, IUCN status & summary
-│   │   ├── ImageGallery.tsx         # Photography grid, CC attribution & lightbox
-│   │   ├── ObservationList.tsx      # Observation cards & search filter
-│   │   ├── ObservationMap.tsx       # Leaflet interactive geolocation map
-│   │   ├── StatusAlerts.tsx         # Loading skeletons, error state & empty state
-│   │   └── Footer.tsx               # Assignment info, ethics & API credits
+│   │   ├── Header.tsx                # Brand logo, nav links, live/sample toggle & theme switch
+│   │   ├── HeroSection.tsx           # Hero banner, search bar, validation & feature highlights
+│   │   ├── SpeciesCard.tsx           # Species details, classification badges & matching candidate tabs
+│   │   ├── ImageGallery.tsx          # Featured photograph, thumbnails, lightbox modal & attribution
+│   │   ├── CountryFilter.tsx         # Country filter dropdown for occurrence queries
+│   │   ├── ObservationList.tsx       # Occurrence record cards with filter pills & detail drawer
+│   │   ├── ObservationMap.tsx        # Enterprise GIS suite with 4 tile layers, fullscreen & radar pins
+│   │   ├── StatusAlerts.tsx          # Loading skeletons, error prompt, empty state & fallback banner
+│   │   ├── AboutModal.tsx            # Project info modal with slogan and GBIF endpoint list
+│   │   └── Footer.tsx                # Forest-green footer with links, mission & open science badges
 │   ├── data/
-│   │   └── sampleWildlife.ts        # Curated offline dataset (Tiger, Panda, Whale, etc.)
+│   │   └── sampleWildlife.ts         # Curated offline dataset (Elephant, Tiger, Monarch, etc.)
 │   ├── services/
-│   │   └── wildlifeService.ts       # Unified API client & fallback controller
+│   │   └── wildlifeService.ts        # Client/server API client with error handling & timeout
 │   └── types/
-│       └── wildlife.ts              # TypeScript interfaces for species & observations
-├── package.json
-├── tsconfig.json
-└── README.md
+│       └── wildlife.ts               # TypeScript interfaces for GBIF species, records & photos
+├── public/                           # Static assets (audited & cleaned of unused starter icons)
+├── README.md                         # Project documentation
+├── DEMO_SCRIPT.md                    # 3–5 minute presentation demonstration flow
+├── package.json                      # Project dependencies & scripts
+└── tsconfig.json                     # TypeScript configuration
 ```
 
 ---
 
-## 🚀 Getting Started
+## ⚙️ Installation & Local Development
 
 ### Prerequisites
-- Node.js `v18+` or `v20+` (tested on Node.js `v24`)
-- npm `v9+` or `v11+`
+- **Node.js** v18.18 or higher (Node 20+ recommended)
+- **npm** or **yarn** / **pnpm**
 
-### Installation
-Clone or navigate to the project directory:
-```bash
-cd wildlife
-npm install
-```
+### Step-by-Step Setup
 
-### Development Server
-Run the local dev server:
-```bash
-npm run dev
-```
-Open [http://localhost:3000](http://localhost:3000) in your web browser.
+1. **Clone or Navigate to the Repository**:
+   ```bash
+   cd wildlife
+   ```
 
-### Production Build & Verification
-Create an optimized production bundle:
-```bash
-npm run build
-```
-Start the production server:
-```bash
-npm run start
-```
+2. **Install Dependencies**:
+   ```bash
+   npm install
+   ```
 
----
+3. **Run the Development Server**:
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## 📡 API Integration Details
+4. **Build for Production**:
+   ```bash
+   npm run build
+   ```
 
-- **API Used**: [iNaturalist Open REST API v1](https://api.inaturalist.org/v1/)
-- **Documentation**: [https://www.inaturalist.org/pages/api+reference](https://www.inaturalist.org/pages/api+reference)
-- **Endpoints Utilized**:
-  - `GET /v1/taxa?q={query}&per_page=6`: Retrieves matched species, taxonomy ranks, Wikipedia summaries, IUCN conservation status, and default photography.
-  - `GET /v1/observations?taxon_id={id}&per_page=12`: Retrieves verified community field sightings, observers, dates, coordinates, and quality grades.
-- **Rate Limits & Best Practices**:
-  - Requests include standard user-agent and timeout guards (10s `AbortController`).
-  - No private API keys or authentication credentials required.
-  - Open data respect: all photos display photographer credit and Creative Commons license tags.
+5. **Start Production Server Locally**:
+   ```bash
+   npm run start
+   ```
 
 ---
 
-## 🛡️ Sample Data & Offline Mode
+## ⚠️ API Limitations & Missing-Data Handling
 
-To test offline functionality or when the public API is unavailable:
-1. Click the **"Live API (iNaturalist)"** pill in the top header.
-2. It toggles into **"Sample Data Mode"** and displays a prominent amber banner.
-3. The application loads verified offline records for iconic species (Bengal Tiger, Red Panda, Blue Whale, Monarch Butterfly, Snow Leopard, Peregrine Falcon).
-4. You can click **"Switch to Live API"** at any time to return to real-time queries.
+GBIF aggregates hundreds of millions of scientific records from museums, universities, camera traps, and citizen science programs. Real-world biodiversity data includes natural limitations that **WildLife Explorer** handles gracefully:
 
----
-
-## 👥 Team Presentation & Component Responsibilities
-
-For the Edzul team evaluation, each team member can present a dedicated aspect of the architecture:
-
-| Member / Role | Core Component / Function | Presentation Focus |
-| :--- | :--- | :--- |
-| **Presenter 1** (Frontend / UI) | `HeroSection.tsx`, `Header.tsx` | Search input validation, UI/UX design, nature color palette, responsive design across mobile/desktop. |
-| **Presenter 2** (API & Services) | `wildlifeService.ts`, `/api/species/route.ts` | iNaturalist API integration, payload sanitization, async error handling, and timeout safeguards. |
-| **Presenter 3** (Data & Resilience) | `sampleWildlife.ts`, `StatusAlerts.tsx` | Sample fallback architecture, loading skeletons, error retry, empty search handling, and distinguishing sample data from live data. |
-| **Presenter 4** (Visuals & Geolocation) | `ImageGallery.tsx`, `ObservationMap.tsx`, `SpeciesCard.tsx` | Lightbox modal, Creative Commons licensing compliance, Leaflet coordinates mapping, and IUCN status classification. |
+- **Missing Coordinates**: Certain sensitive or endangered species have their geographic coordinates obscured or omitted by institutions to protect against illegal poaching. Our map skips un-georeferenced records without crashing, and clearly informs the user.
+- **Records Without Photographs**: Many occurrence records originate from historic preserved herbarium specimens or acoustic monitors rather than cameras. The UI treats imagery as optional, presenting clean placeholders when photos are unavailable.
+- **Basis of Record Distinction**: GBIF records encompass diverse scientific methodologies. Records are clearly badged (*“Human Observation”*, *“Preserved Specimen”*, *“Machine Observation”*) to avoid falsely implying that every record is an in-person recent sighting.
+- **Network Rate Limits & Downtime**: If the public GBIF API experiences network latency or rate-limiting, the application triggers an AbortController timeout (10s) and offers an instant transition to the verified offline sample dataset.
 
 ---
 
-## 📦 How to Publish to GitHub
+## 🚀 Deployment to Vercel
 
-If you wish to push this repository to GitHub:
-```bash
-# 1. Initialize git if not already initialized
-git init
+The application is fully prepared for zero-configuration deployment on **Vercel**:
 
-# 2. Stage all files
-git add .
-
-# 3. Create initial commit
-git commit -m "feat: complete WildLife Explorer application with iNaturalist API and sample fallback"
-
-# 4. Link your remote GitHub repository
-git branch -M main
-git remote add origin https://github.com/<your-username>/wildlife-explorer.git
-
-# 5. Push code
-git push -u origin main
-```
+1. Push your code to a GitHub repository:
+   ```bash
+   git add .
+   git commit -m "feat: WildLife Explorer with GBIF API integration"
+   git push origin main
+   ```
+2. Log in to [Vercel](https://vercel.com) and click **“Add New Project”**.
+3. Import your GitHub repository.
+4. Framework Preset will automatically detect **Next.js**.
+5. Click **Deploy**. Vercel will run `npm run build` and launch the application on a global edge network.
 
 ---
 
-## 📝 Known Limitations
-- Obscured Coordinates: For certain threatened or endangered species, citizen scientists and conservation organizations intentionally obscure coordinates to protect wildlife from poaching; in these cases, the map displays regional coordinates or notes that coordinates are obscured.
-- Public API Rate Limits: iNaturalist requests are subject to public community rate limits (~60 requests/minute). If rate limits are exceeded, the app gracefully falls back to the curated sample dataset with a retry option.
+## 👥 Team Contribution Section
+
+This application was developed as a team project for the college demonstration:
+
+- **Frontend Architecture & Components**: Next.js App Router setup, component modularization, state management, and Leaflet map integration.
+- **API Integration & Data Engineering**: GBIF REST API integration (`/v1/species`, `/v1/occurrence`), timeout handling, vernacular name resolution, and country filtering.
+- **UI/UX Design & Accessibility**: Forest-inspired visual theme, responsive layouts for mobile and desktop, contrast compliance, and lightbox modals.
+- **Quality Assurance & Resilience**: Curated sample dataset creation, input validation, empty/error state handling, and documentation.
 
 ---
 
-*Developed for the Edzul Project Assignment.*
+## 🎬 3–5 Minute Demonstration Flow
+
+See [DEMO_SCRIPT.md](file:///c:/Users/Ganes/OneDrive/Desktop/wildlife/DEMO_SCRIPT.md) for the complete, timed presentation script covering:
+1. **Homepage & Mission** (0:00 – 0:45)
+2. **Species Search: Elephant & Tiger** (0:45 – 1:45)
+3. **Imagery, Licensing & Geographic Map** (1:45 – 2:45)
+4. **Validation, Country Filtering & Offline Fallback** (2:45 – 3:30)
+5. **Code Architecture & Wrap-Up** (3:30 – 4:00)
