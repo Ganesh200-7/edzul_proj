@@ -6,6 +6,8 @@
 
 **Live deployment:** [WildLife Explorer on Vercel](https://edzul-proj-ohnqplitg-gani16.vercel.app)
 
+**Demo video:** [Watch the WildLife Explorer demo on Google Drive](https://drive.google.com/file/d/1Gbmzq2zzGiiDsGjsZ8EOyFDTKFc8TLLB/view?usp=sharing)
+
 ---
 
 ## 🌿 Project Overview
@@ -15,7 +17,7 @@ Understanding Earth's living organisms requires connecting scientific taxonomy w
 - Inspect full taxonomic classifications from Kingdom to Species with verified rank badges.
 - Explore verified observation records, including dates, locations, coordinates, observer attributions, and specimen photos.
 - Browse authentic wildlife photographs with explicit Creative Commons licensing and fullscreen lightbox zoom.
-- Analyze species occurrences using an enterprise-grade **Interactive Biodiversity GIS Map Suite** featuring 4 tile layers (Satellite, Topographic, Dark Night, and Discovery), fullscreen viewing, bounds fitting, and pulsing radar beacon pins.
+- Analyze species occurrences using an **Interactive Biodiversity GIS Map** with Satellite and Topographic layers, fullscreen viewing, bounds fitting, and pulsing radar beacon pins.
 - Filter observation records by country (e.g., South Africa, India, Thailand, United States, Kenya, Brazil).
 - Seamlessly transition between **Live GBIF API** mode and a curated **Offline Sample Dataset** for reliable demonstrations.
 
@@ -31,11 +33,9 @@ Understanding Earth's living organisms requires connecting scientific taxonomy w
    - Polished buttons with shimmering hover effects (`.btn-premium`) and custom dark/light mode toggle.
 
 2. **Enterprise GIS Biodiversity Map Suite**:
-   - **4 Selectable Tile Layers**:
+   - **2 Selectable Tile Layers**:
      - 🛰️ **Satellite Imagery**: High-resolution true-color satellite views via Esri World Imagery.
      - ⛰️ **Topographic Terrain**: Contour lines, elevation shading, and trails via Esri World Topo.
-     - 🌙 **Night Glow**: Sleek low-light minimalist cartography via CartoDB Dark Matter.
-     - 🗺️ **Discovery Voyager**: Clean, high-contrast exploratory mapping via CartoDB Voyager.
    - **Floating GIS HUD Controls**: Layer switcher pills, one-click recenter/fit-to-bounds (`Crosshair`), fullscreen expand/minimize (`Maximize2`/`Minimize2`), and smooth zoom controls.
    - **Animated Radar Beacon Pins**: Custom pulsating beacon rings with basis-of-record color-coding (emerald for live human observations, cyan for preserved museum specimens).
    - **Rich Interactive Popups**: Display specimen thumbnails, observer handles, verified status badges, copyable GPS coordinates, and direct links to official GBIF occurrence records.
@@ -135,7 +135,7 @@ wildlife/
 │   │   ├── ImageGallery.tsx          # Featured photograph, thumbnails, lightbox modal & attribution
 │   │   ├── CountryFilter.tsx         # Country filter dropdown for occurrence queries
 │   │   ├── ObservationList.tsx       # Occurrence record cards with filter pills & detail drawer
-│   │   ├── ObservationMap.tsx        # Enterprise GIS suite with 4 tile layers, fullscreen & radar pins
+│   │   ├── ObservationMap.tsx        # GIS map with satellite/topographic layers, fullscreen & radar pins
 │   │   ├── StatusAlerts.tsx          # Loading skeletons, error prompt, empty state & fallback banner
 │   │   ├── AboutModal.tsx            # Project info modal with slogan and GBIF endpoint list
 │   │   └── Footer.tsx                # Forest-green footer with links, mission & open science badges
